@@ -1,0 +1,41 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  font: {
+    family: system-ui, sans-serif;
+  }
+}
+
+body {
+  background: rgb(253, 212, 198);
+}
+
+ul li {
+  list-style-type: none;
+}
+#wet {
+  h2 {
+    text-align: center;
+  }
+  .container {
+    border: 1px solid blue;
+    display: flex;
+    justify-content: center;
+    > * {
+      flex: 1 1 25%;
+      text-align: center;
+    }
+  }
+}
+.moment {
+  padding: 1em;
+}
+
+#search {
+  display: flex;
+  justify-content: center;
+  padding: 1em;
+}
