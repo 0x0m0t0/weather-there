@@ -20,14 +20,23 @@ searchInput.addEventListener('keypress', (e) => {
     searchFunction();
   }
 });
-
+let lat;
+let lon;
 const searchFunction = () => {
   const geoloc = fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityname},${countrycode}&limit=1&appid=${aKey}`,
   )
     .then((res) => res.json())
-    .then((o) => console.log(o))
+    .then((o) => {
+      console.log(o);
+      console.log(o[0].lat);
+      lat = o[0].lat;
+      lon = o[0].lon;
+      console.log(lat);
+      console.log(lon);
+    })
     .catch((err) => console.log('err', err));
+  openW(lat, lon);
 };
 searchBtn.addEventListener('click', (e) => {
   console.log('hello mr search button');
@@ -47,9 +56,10 @@ const creationEl = (timeDay, el, date_time) => {
   time.innerText = date_time[1];
   date.innerText = date_time[0];
 };
-const openW = () => {
+
+const openW = (lat, lon) => {
   const fetching = fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?lat=50.805580&lon=4.313440&appid=${aKey}&units=metric`,
+    `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${aKey}&units=metric`,
   )
     .then((res) => res.json())
     .then((w) => {
@@ -84,6 +94,9 @@ const openW = () => {
         const noon = document.getElementsByClassName('noon')[0];
         const evening = document.getElementsByClassName('evening')[0];
         const night = document.getElementsByClassName('night')[0];
+
+        /// show date of today separate
+        /// if datenow is not equal to today
         switch (date_time[1]) {
           case '06:00:00':
             creationEl(morning, el, date_time);
