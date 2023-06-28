@@ -17,12 +17,12 @@ searchInput.addEventListener('keypress', (e) => {
     cityname = city_country[0];
     countrycode = city_country[1];
     console.log(cityname);
-    searchFunction();
+    searchFunction(openW(lat, lon));
   }
 });
 let lat;
 let lon;
-const searchFunction = () => {
+const searchFunction = (openW) => {
   const geoloc = fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityname},${countrycode}&limit=1&appid=${aKey}`,
   )
@@ -35,8 +35,8 @@ const searchFunction = () => {
       console.log(lat);
       console.log(lon);
     })
+    .then(() => openW(lat, lon))
     .catch((err) => console.log('err', err));
-  openW(lat, lon);
 };
 searchBtn.addEventListener('click', (e) => {
   console.log('hello mr search button');
