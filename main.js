@@ -28,7 +28,7 @@ searchInput.addEventListener('keypress', (e) => {
     let city_country = input.split(',', 2);
     cityname = city_country[0];
     countrycode = city_country[1];
-    console.log(cityname);
+
     searchFunction(openW(lat, lon));
   }
 });
@@ -38,7 +38,7 @@ searchBtn.addEventListener('click', (e) => {
   let city_country = input.split(',', 2);
   cityname = city_country[0];
   countrycode = city_country[1];
-  console.log(cityname);
+
   searchFunction(openW(lat, lon));
 });
 
@@ -70,63 +70,37 @@ const last = () => {
 };
 
 const creationEl = (timeDay, el, date_time, lastItem) => {
+  let moment = document.createElement('div');
+  let temp = document.createElement('p');
+  let date = document.createElement('p');
+  let time = document.createElement('p');
+  moment.setAttribute('class', 'moment');
+
+  // moment.append(date);
+  moment.append(time);
+  moment.append(temp);
+
+  let pClouds = document.createElement('p');
+  let pHumidity = document.createElement('p');
+
+  moment.append(pClouds);
+  moment.append(pHumidity);
+
+  timeDay.append(moment);
+
+  //// fix humidity levels with icons
+  if (el.main.humidity > 50) {
+  }
+
+  pHumidity.innerText = `Humidity ${el.main.humidity}%`;
+  pClouds.innerText = `Clouds ${el.clouds.all}%`;
+
+  temp.innerText = el.main.temp;
+  temp.innerText = temp.innerText.concat(' ', '°C');
+  time.innerText = date_time[1];
+  // date.innerText = date_time[0];
   if (lastItem === 0) {
-    console.log('fuckyeah');
-    let moment = document.createElement('div');
-    let temp = document.createElement('p');
-    let date = document.createElement('p');
-    let time = document.createElement('p');
-    moment.setAttribute('class', 'moment');
-
-    // moment.append(date);
-    moment.append(time);
-    moment.append(temp);
-
-    let pClouds = document.createElement('p');
-    let pHumidity = document.createElement('p');
-
-    moment.append(pClouds);
-    moment.append(pHumidity);
-
-    timeDay.append(moment);
-
-    pHumidity.innerText = `Humidity ${el.main.humidity}%`;
-    pClouds.innerText = `Clouds ${el.clouds.all}%`;
-
-    temp.innerText = el.main.temp;
-    temp.innerText = temp.innerText.concat(' ', '°C');
-    time.innerText = date_time[1];
-    // date.innerText = date_time[0];
-
     moment.id = 'last-moment';
-    let lasty = document.getElementById('last-moment');
-    console.log(lasty);
-  } else {
-    let moment = document.createElement('div');
-    let temp = document.createElement('p');
-    let date = document.createElement('p');
-    let time = document.createElement('p');
-    moment.setAttribute('class', 'moment');
-
-    // moment.append(date);
-    moment.append(time);
-    moment.append(temp);
-
-    let pClouds = document.createElement('p');
-    let pHumidity = document.createElement('p');
-
-    moment.append(pClouds);
-    moment.append(pHumidity);
-
-    timeDay.append(moment);
-
-    pHumidity.innerText = `Humidity ${el.main.humidity}%`;
-    pClouds.innerText = `Clouds ${el.clouds.all}%`;
-
-    temp.innerText = el.main.temp;
-    temp.innerText = temp.innerText.concat(' ', '°C');
-    time.innerText = date_time[1];
-    // date.innerText = date_time[0];
   }
 };
 
@@ -137,7 +111,6 @@ const openW = (lat, lon) => {
     .then((res) => res.json())
     .then((w) => {
       console.log(w);
-      console.log(w.city.name);
 
       cityh2.textContent = w.city.name;
       // +
@@ -149,7 +122,7 @@ const openW = (lat, lon) => {
 
       wet.innerHTML = `
       <div>
-    <div class="week"><h2>${w.city.name}</h2></div>
+    <div class="week"><h2></h2></div>
     <div class="container">
     <div class="morning"> <h2>morning</h2></div>
     <div class="noon"><h2>noon</h2> </div>
@@ -198,7 +171,7 @@ const openW = (lat, lon) => {
                 (idx === w.list.length - 2 && date_time[1] == '12:00:00')
               ) {
                 //   console.log('hurray');
-                alert('fuck');
+
                 creationEl(noon, el, date_time, 0);
               } else {
                 creationEl(noon, el, date_time);
