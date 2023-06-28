@@ -10,6 +10,11 @@ const searchInput = search.children[1];
 let cityname;
 let countrycode;
 
+let sectionToday = document.createElement('section');
+let pToday = document.createElement('p');
+sectionToday.append(pToday);
+search.insertAdjacentElement('afterend', sectionToday);
+
 searchInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     let input = e.target.value;
@@ -20,6 +25,16 @@ searchInput.addEventListener('keypress', (e) => {
     searchFunction(openW(lat, lon));
   }
 });
+
+searchBtn.addEventListener('click', (e) => {
+  let input = searchInput.value;
+  let city_country = input.split(',', 2);
+  cityname = city_country[0];
+  countrycode = city_country[1];
+  console.log(cityname);
+  searchFunction(openW(lat, lon));
+});
+
 let lat;
 let lon;
 const searchFunction = (lat, lon) => {
@@ -48,14 +63,14 @@ const creationEl = (timeDay, el, date_time) => {
   let date = document.createElement('p');
   let time = document.createElement('p');
   moment.setAttribute('class', 'moment');
-  moment.append(date);
+  // moment.append(date);
   moment.append(time);
   moment.append(temp);
   timeDay.append(moment);
   temp.innerText = el.main.temp;
   temp.innerText = temp.innerText.concat(' ', '°C');
   time.innerText = date_time[1];
-  date.innerText = date_time[0];
+  // date.innerText = date_time[0];
 };
 
 const openW = (lat, lon) => {
@@ -132,14 +147,7 @@ const openW = (lat, lon) => {
           }
         } else {
           if (el == w.list[0]) {
-            console.log('haaaaa');
-            let sectionToday = document.createElement('section');
-            let pToday = document.createElement('p');
-
             pToday.innerText = w.list[0].main.temp;
-            console.log('hconfused');
-            sectionToday.append(pToday);
-            search.insertAdjacentElement('afterend', sectionToday);
           }
         }
       });
