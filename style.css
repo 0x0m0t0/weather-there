@@ -59,11 +59,13 @@ main {
   display: flex;
   flex-flow: row wrap; }
   main #search,
-  main > :nth-child(2) {
+  main #today {
     width: 50%;
-    border: 4px dotted yellow;
     display: flex;
     justify-content: center;
     padding: 1em; }
+  main #today {
+    display: flex;
+    flex-flow: column wrap; }
 
 /*# sourceMappingURL=style.css.map */

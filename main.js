@@ -12,7 +12,14 @@ let countrycode;
 
 let sectionToday = document.createElement('section');
 let pToday = document.createElement('p');
+let pClouds = document.createElement('p');
+let pHumidity = document.createElement('p');
+sectionToday.setAttribute('id', 'today');
+let cityh2 = document.createElement('h2');
+sectionToday.append(cityh2);
 sectionToday.append(pToday);
+sectionToday.append(pClouds);
+sectionToday.append(pHumidity);
 search.insertAdjacentElement('afterend', sectionToday);
 
 searchInput.addEventListener('keypress', (e) => {
@@ -66,7 +73,18 @@ const creationEl = (timeDay, el, date_time) => {
   // moment.append(date);
   moment.append(time);
   moment.append(temp);
+
+  let pClouds = document.createElement('p');
+  let pHumidity = document.createElement('p');
+
+  moment.append(pClouds);
+  moment.append(pHumidity);
+
   timeDay.append(moment);
+
+  pHumidity.innerText = `Humidity ${el.main.humidity}%`;
+  pClouds.innerText = `Clouds ${el.clouds.all}%`;
+
   temp.innerText = el.main.temp;
   temp.innerText = temp.innerText.concat(' ', '°C');
   time.innerText = date_time[1];
@@ -81,16 +99,14 @@ const openW = (lat, lon) => {
     .then((w) => {
       console.log(w);
       console.log(w.city.name);
-      let p = document.createElement('p');
-      p.textContent =
-        w.city.name +
-        ' has a population of ' +
-        w.city.population +
-        w.list[0].main.temp +
-        '   ' +
-        w.list[0].dt;
-      wet.append(p);
-      console.log(wet);
+
+      cityh2.textContent = w.city.name;
+      // +
+      // ' has a population of ' +
+      // w.city.population +
+      // w.list[0].main.temp +
+      // '   ' +
+      // w.list[0].dt;
 
       wet.innerHTML = `
       <div>
@@ -117,7 +133,7 @@ const openW = (lat, lon) => {
 
         week.append(weekday);
       }
-      w.list.forEach((el) => {
+      w.list.forEach((el, idx) => {
         const date_time = el.dt_txt.split(' ', 2);
         // console.log(date_time);
 
@@ -147,9 +163,13 @@ const openW = (lat, lon) => {
           }
         } else {
           if (el == w.list[0]) {
+            pHumidity.innerText = `Humidity ${w.list[0].main.humidity}%`;
+            pClouds.innerText = `Clouds ${w.list[0].clouds.all}%`;
             pToday.innerText = w.list[0].main.temp;
+            pToday.innerText = pToday.innerText.concat(' ', '°C');
           }
         }
+        console.log(w.list.length);
       });
     })
     .catch((err) => console.log('err', err));

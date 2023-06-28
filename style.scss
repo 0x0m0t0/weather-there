@@ -77,11 +77,15 @@ main {
   display: flex;
   flex-flow: row wrap;
   #search,
-  > :nth-child(2) {
+  #today {
     width: 50%;
-    border: 4px dotted yellow;
+
     display: flex;
     justify-content: center;
     padding: 1em;
+  }
+  #today {
+    display: flex;
+    flex-flow: column wrap;
   }
 }
