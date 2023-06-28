@@ -22,7 +22,7 @@ searchInput.addEventListener('keypress', (e) => {
 });
 let lat;
 let lon;
-const searchFunction = (openW) => {
+const searchFunction = (lat, lon) => {
   const geoloc = fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityname},${countrycode}&limit=1&appid=${aKey}`,
   )
@@ -77,7 +77,7 @@ const openW = (lat, lon) => {
       console.log(wet);
 
       wet.innerHTML = `
-    <div><h2>${w.city.name}</h2>
+    <div class="week"><h2>${w.city.name}</h2>
     <div class="container">
     <div class="morning"> <h2>morning</h2></div>
     <div class="noon"><h2>noon</h2> </div>
@@ -115,6 +115,7 @@ const openW = (lat, lon) => {
             default:
               break;
           }
+        } else {
         }
       });
     })
