@@ -52,7 +52,7 @@ const creationEl = (timeDay, el, date_time) => {
   moment.append(temp);
   timeDay.append(moment);
   temp.innerText = el.main.temp;
-
+  temp.innerText = temp.innerText.concat(' ', '°C');
   time.innerText = date_time[1];
   date.innerText = date_time[0];
 };
@@ -79,10 +79,10 @@ const openW = (lat, lon) => {
       wet.innerHTML = `
     <div><h2>${w.city.name}</h2>
     <div class="container">
-    <div class="morning"> morning</div>
-    <div class="noon">noon </div>
-    <div class="evening"> evening</div>
-    <div class="night">night </div>
+    <div class="morning"> <h2>morning</h2></div>
+    <div class="noon"><h2>noon</h2> </div>
+    <div class="evening"> <h2>evening</h2></div>
+    <div class="night"> <h2>night</h2></div>
     
     </div></div>`;
 
@@ -94,11 +94,9 @@ const openW = (lat, lon) => {
         const noon = document.getElementsByClassName('noon')[0];
         const evening = document.getElementsByClassName('evening')[0];
         const night = document.getElementsByClassName('night')[0];
-        console.log(date_time[0]);
         /// show date of today separate
         /// if datenow is not equal to today
         let currentDate = new Date().toJSON().slice(0, 10);
-        console.log(!currentDate);
 
         if (date_time[0] !== currentDate) {
           switch (date_time[1]) {
@@ -111,11 +109,11 @@ const openW = (lat, lon) => {
             case '18:00:00':
               creationEl(evening, el, date_time);
               break;
-            case '00:00:00':
+            case '21:00:00':
               creationEl(night, el, date_time);
               break;
             default:
-              console.log("idk what i'm doing");
+              break;
           }
         }
       });
