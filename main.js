@@ -64,31 +64,70 @@ searchBtn.addEventListener('click', (e) => {
   console.log('hello mr search button');
 });
 
-const creationEl = (timeDay, el, date_time) => {
-  let moment = document.createElement('div');
-  let temp = document.createElement('p');
-  let date = document.createElement('p');
-  let time = document.createElement('p');
-  moment.setAttribute('class', 'moment');
-  // moment.append(date);
-  moment.append(time);
-  moment.append(temp);
+const last = () => {
+  // moment.setAttribute('id', 'last-moment');
+  console.log('hahahahahhaa');
+};
 
-  let pClouds = document.createElement('p');
-  let pHumidity = document.createElement('p');
+const creationEl = (timeDay, el, date_time, lastItem) => {
+  if (lastItem === 0) {
+    console.log('fuckyeah');
+    let moment = document.createElement('div');
+    let temp = document.createElement('p');
+    let date = document.createElement('p');
+    let time = document.createElement('p');
+    moment.setAttribute('class', 'moment');
 
-  moment.append(pClouds);
-  moment.append(pHumidity);
+    // moment.append(date);
+    moment.append(time);
+    moment.append(temp);
 
-  timeDay.append(moment);
+    let pClouds = document.createElement('p');
+    let pHumidity = document.createElement('p');
 
-  pHumidity.innerText = `Humidity ${el.main.humidity}%`;
-  pClouds.innerText = `Clouds ${el.clouds.all}%`;
+    moment.append(pClouds);
+    moment.append(pHumidity);
 
-  temp.innerText = el.main.temp;
-  temp.innerText = temp.innerText.concat(' ', '°C');
-  time.innerText = date_time[1];
-  // date.innerText = date_time[0];
+    timeDay.append(moment);
+
+    pHumidity.innerText = `Humidity ${el.main.humidity}%`;
+    pClouds.innerText = `Clouds ${el.clouds.all}%`;
+
+    temp.innerText = el.main.temp;
+    temp.innerText = temp.innerText.concat(' ', '°C');
+    time.innerText = date_time[1];
+    // date.innerText = date_time[0];
+
+    moment.id = 'last-moment';
+    let lasty = document.getElementById('last-moment');
+    console.log(lasty);
+  } else {
+    let moment = document.createElement('div');
+    let temp = document.createElement('p');
+    let date = document.createElement('p');
+    let time = document.createElement('p');
+    moment.setAttribute('class', 'moment');
+
+    // moment.append(date);
+    moment.append(time);
+    moment.append(temp);
+
+    let pClouds = document.createElement('p');
+    let pHumidity = document.createElement('p');
+
+    moment.append(pClouds);
+    moment.append(pHumidity);
+
+    timeDay.append(moment);
+
+    pHumidity.innerText = `Humidity ${el.main.humidity}%`;
+    pClouds.innerText = `Clouds ${el.clouds.all}%`;
+
+    temp.innerText = el.main.temp;
+    temp.innerText = temp.innerText.concat(' ', '°C');
+    time.innerText = date_time[1];
+    // date.innerText = date_time[0];
+  }
 };
 
 const openW = (lat, lon) => {
@@ -147,15 +186,35 @@ const openW = (lat, lon) => {
         if (date_time[0] !== currentDate) {
           switch (date_time[1]) {
             case '06:00:00':
+              if (idx == w.list.length - 1) {
+                // console.log('hurray');
+                creationEl(morning, el, date_time, last);
+              }
               creationEl(morning, el, date_time);
               break;
             case '12:00:00':
-              creationEl(noon, el, date_time);
+              if (
+                idx == w.list.length - 1 ||
+                (idx === w.list.length - 2 && date_time[1] == '12:00:00')
+              ) {
+                //   console.log('hurray');
+                alert('fuck');
+                creationEl(noon, el, date_time, 0);
+              } else {
+                creationEl(noon, el, date_time);
+              }
+
               break;
             case '18:00:00':
+              if (idx == w.list.length - 1) {
+                console.log('hurray');
+              }
               creationEl(evening, el, date_time);
               break;
             case '21:00:00':
+              if (idx == w.list.length - 1) {
+                console.log('hurray');
+              }
               creationEl(night, el, date_time);
               break;
             default:
