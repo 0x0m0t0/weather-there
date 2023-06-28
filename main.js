@@ -94,27 +94,35 @@ const openW = (lat, lon) => {
         const noon = document.getElementsByClassName('noon')[0];
         const evening = document.getElementsByClassName('evening')[0];
         const night = document.getElementsByClassName('night')[0];
-
+        console.log(date_time[0]);
         /// show date of today separate
         /// if datenow is not equal to today
-        switch (date_time[1]) {
-          case '06:00:00':
-            creationEl(morning, el, date_time);
-            break;
-          case '12:00:00':
-            creationEl(noon, el, date_time);
-            break;
-          case '18:00:00':
-            creationEl(evening, el, date_time);
-            break;
-          case '00:00:00':
-            creationEl(night, el, date_time);
-            break;
-          default:
-            console.log("idk what i'm doing");
+        let currentDate = new Date().toJSON().slice(0, 10);
+        console.log(!currentDate);
+
+        if (date_time[0] !== currentDate) {
+          switch (date_time[1]) {
+            case '06:00:00':
+              creationEl(morning, el, date_time);
+              break;
+            case '12:00:00':
+              creationEl(noon, el, date_time);
+              break;
+            case '18:00:00':
+              creationEl(evening, el, date_time);
+              break;
+            case '00:00:00':
+              creationEl(night, el, date_time);
+              break;
+            default:
+              console.log("idk what i'm doing");
+          }
         }
       });
     })
     .catch((err) => console.log('err', err));
 };
 // openW();
+
+let currentDate = new Date().toJSON().slice(0, 10);
+console.log(currentDate); // "2022-06-17"
