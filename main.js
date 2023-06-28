@@ -41,6 +41,7 @@ const searchFunction = (lat, lon) => {
 searchBtn.addEventListener('click', (e) => {
   console.log('hello mr search button');
 });
+
 const creationEl = (timeDay, el, date_time) => {
   let moment = document.createElement('div');
   let temp = document.createElement('p');
@@ -77,7 +78,8 @@ const openW = (lat, lon) => {
       console.log(wet);
 
       wet.innerHTML = `
-    <div class="week"><h2>${w.city.name}</h2>
+      <div>
+    <div class="week"><h2>${w.city.name}</h2></div>
     <div class="container">
     <div class="morning"> <h2>morning</h2></div>
     <div class="noon"><h2>noon</h2> </div>
@@ -86,6 +88,20 @@ const openW = (lat, lon) => {
     
     </div></div>`;
 
+      let week = document.getElementsByClassName('week')[0];
+      let currentDate = new Date().toJSON().slice(0, 10);
+      let cDate = new Date();
+
+      for (let a = 1; a < 6; a++) {
+        let nextDay = new Date(cDate);
+        nextDay.setDate(cDate.getDate() + a);
+        console.log(nextDay.toDateString().slice(0, 10));
+
+        let weekday = document.createElement('h3');
+        weekday.textContent = nextDay.toDateString().slice(0, 10);
+
+        week.append(weekday);
+      }
       w.list.forEach((el) => {
         const date_time = el.dt_txt.split(' ', 2);
         // console.log(date_time);
@@ -96,7 +112,6 @@ const openW = (lat, lon) => {
         const night = document.getElementsByClassName('night')[0];
         /// show date of today separate
         /// if datenow is not equal to today
-        let currentDate = new Date().toJSON().slice(0, 10);
 
         if (date_time[0] !== currentDate) {
           switch (date_time[1]) {
@@ -116,6 +131,16 @@ const openW = (lat, lon) => {
               break;
           }
         } else {
+          if (el == w.list[0]) {
+            console.log('haaaaa');
+            let sectionToday = document.createElement('section');
+            let pToday = document.createElement('p');
+
+            pToday.innerText = w.list[0].main.temp;
+            console.log('hconfused');
+            sectionToday.append(pToday);
+            search.insertAdjacentElement('afterend', sectionToday);
+          }
         }
       });
     })

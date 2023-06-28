@@ -51,4 +51,13 @@ ul li {
   border-left: 2px solid red;
   border-right: 2px solid red; }
 
+.week {
+  display: flex;
+  justify-content: center; }
+  .week > * {
+    flex: 1 1 calc(100% / 6);
+    max-width: calc(100% / 6 - 2rem);
+    justify-content: flex-start;
+    margin: 0 1rem; }
+
 /*# sourceMappingURL=style.css.map */
