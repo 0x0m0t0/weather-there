@@ -17,12 +17,12 @@ searchInput.addEventListener('keypress', (e) => {
     cityname = city_country[0];
     countrycode = city_country[1];
     console.log(cityname);
-    searchFunction();
+    searchFunction(openW(lat, lon));
   }
 });
 let lat;
 let lon;
-const searchFunction = () => {
+const searchFunction = (openW) => {
   const geoloc = fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityname},${countrycode}&limit=1&appid=${aKey}`,
   )
@@ -35,8 +35,8 @@ const searchFunction = () => {
       console.log(lat);
       console.log(lon);
     })
+    .then(() => openW(lat, lon))
     .catch((err) => console.log('err', err));
-  openW(lat, lon);
 };
 searchBtn.addEventListener('click', (e) => {
   console.log('hello mr search button');
@@ -52,7 +52,7 @@ const creationEl = (timeDay, el, date_time) => {
   moment.append(temp);
   timeDay.append(moment);
   temp.innerText = el.main.temp;
-
+  temp.innerText = temp.innerText.concat(' ', '°C');
   time.innerText = date_time[1];
   date.innerText = date_time[0];
 };
@@ -79,10 +79,10 @@ const openW = (lat, lon) => {
       wet.innerHTML = `
     <div><h2>${w.city.name}</h2>
     <div class="container">
-    <div class="morning"> morning</div>
-    <div class="noon">noon </div>
-    <div class="evening"> evening</div>
-    <div class="night">night </div>
+    <div class="morning"> <h2>morning</h2></div>
+    <div class="noon"><h2>noon</h2> </div>
+    <div class="evening"> <h2>evening</h2></div>
+    <div class="night"> <h2>night</h2></div>
     
     </div></div>`;
 
@@ -94,27 +94,33 @@ const openW = (lat, lon) => {
         const noon = document.getElementsByClassName('noon')[0];
         const evening = document.getElementsByClassName('evening')[0];
         const night = document.getElementsByClassName('night')[0];
-
         /// show date of today separate
         /// if datenow is not equal to today
-        switch (date_time[1]) {
-          case '06:00:00':
-            creationEl(morning, el, date_time);
-            break;
-          case '12:00:00':
-            creationEl(noon, el, date_time);
-            break;
-          case '18:00:00':
-            creationEl(evening, el, date_time);
-            break;
-          case '00:00:00':
-            creationEl(night, el, date_time);
-            break;
-          default:
-            console.log("idk what i'm doing");
+        let currentDate = new Date().toJSON().slice(0, 10);
+
+        if (date_time[0] !== currentDate) {
+          switch (date_time[1]) {
+            case '06:00:00':
+              creationEl(morning, el, date_time);
+              break;
+            case '12:00:00':
+              creationEl(noon, el, date_time);
+              break;
+            case '18:00:00':
+              creationEl(evening, el, date_time);
+              break;
+            case '21:00:00':
+              creationEl(night, el, date_time);
+              break;
+            default:
+              break;
+          }
         }
       });
     })
     .catch((err) => console.log('err', err));
 };
 // openW();
+
+let currentDate = new Date().toJSON().slice(0, 10);
+console.log(currentDate); // "2022-06-17"
