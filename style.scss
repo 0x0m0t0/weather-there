@@ -27,6 +27,7 @@ ul li {
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-start;
+      align-items: center;
       &:first-child > * {
         border-top: 2px dotted blue;
         border-top-left-radius: 10px;
@@ -45,6 +46,12 @@ ul li {
         border-left: 2px dotted blue;
         border-right: 2px dotted blue;
         border-radius: 0px;
+        min-height: 8rem;
+      }
+      > *:first-child {
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       #last-moment {
         border-bottom: 2px solid red;
@@ -76,6 +83,7 @@ ul li {
     max-width: calc(100% / 6 - 2rem);
     justify-content: flex-start;
     margin: 0 1rem;
+    text-align: center;
   }
 }
 main {
@@ -93,4 +101,9 @@ main {
     display: flex;
     flex-flow: column wrap;
   }
+}
+
+svg {
+  max-width: 20px;
+  max-height: 20px;
 }
