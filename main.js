@@ -120,10 +120,24 @@ const openW = (lat, lon) => {
       let weekTemps = [];
 
       w.list.forEach((date) => {
-        let wdate = date.dt_txt.slice('', -9);
+        let apiDate = date.dt_txt.slice('', -9);
+        console.log(apiDate);
+        let today = new Date();
+        let nextDay = new Date(today);
+        let nextString = nextDay.toISOString().split('T')[0];
+
+        if (apiDate == nextString) {
+          // console.log('nextday');
+          // console.log(nextString);
+          // console.log('fuck');
+        } else {
+          nextDay.setDate(nextDay.getDate() + 1);
+          // console.log(nextDay);
+          nextString = nextDay.toISOString().split('T')[0];
+        }
       });
 
-      console.log(weekTemps);
+      // console.log(weekTemps);
 
       let cleanData = w.list.map((item) => ({
         date: item.dt_txt.slice('', -9),
@@ -149,59 +163,8 @@ const openW = (lat, lon) => {
       //   ...w.city,
       // }));
 
-      // console.log(w.city);
-      // console.log(lool);
-      // console.log('fuckisthis');
-      // console.log(newTest);
-      // cleanData.forEach((el) => {
-      //   cleanData[el].push(w.city.name);
-      // });
-      // console.log(cleanData[1]);
-      // console.log(cleanData);
-
       // let week = document.getElementsByClassName('week')[0];
-
-      // let cDate = new Date();
-
-      // let nextDay = new Date(cDate);
-      // console.log(nextDay);
-      // nextDay.setDate(cDate.getDate() + 1);
-      // console.log('yahahalalalala');
-      // console.log(nextDay);
-      // nextDay = nextDay.toISOString().split('T')[0];
-      // console.log(nextDay);
-      // console.log('uhu');
-
-      cleanData.forEach((el, idx) => {
-        // let cDate = new Date();
-        // for (let a = 1; a < 6; a++) {
-        //   let nextDay = new Date(cDate);
-        //   nextDay.setDate(cDate.getDate() + a);
-        //   console.log(nextDay.toDateString().slice(0, 10));
-        //   let weekday = document.createElement('h3');
-        //   weekday.textContent = nextDay.toDateString().slice(0, 10);
-        //   // week.append(weekday);
-        // }
-        // console.log(el.date);
-        // console.log(nextDay);
-        dateChecker(el, nextDay, cDate);
-      });
     })
     .catch((err) => console.log('err', err));
 };
 // openW();
-
-// const dateChecker = (el, nextDay, cDate) => {
-//   if (el.date == nextDay) {
-//     let weekday = document.createElement('div');
-//     weekday.innerText = el.temp;
-//     main.append(weekday);
-//   } else if (el.date !== nextDay) {
-//     let nextDay = new Date(cDate);
-
-//     nextDay.setDate(cDate.getDate() + 1);
-//     nextDay = nextDay.toISOString().split('T')[0];
-//     console.log('bla');
-//     // dateChecker(el, nextDay, cDate);
-//   }
-// };
