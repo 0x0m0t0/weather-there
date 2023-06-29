@@ -119,25 +119,45 @@ const openW = (lat, lon) => {
 
       let weekTemps = [];
 
+      let today = new Date();
+      let nextDay = new Date(today);
+      let nextString = nextDay.toISOString().split('T')[0];
+      let objWeek;
       w.list.forEach((date) => {
         let apiDate = date.dt_txt.slice('', -9);
-        console.log(apiDate);
-        let today = new Date();
-        let nextDay = new Date(today);
-        let nextString = nextDay.toISOString().split('T')[0];
 
         if (apiDate == nextString) {
-          // console.log('nextday');
-          // console.log(nextString);
-          // console.log('fuck');
+          if (weekTemps !== []) {
+            for (const key of weekTemps) {
+              if (apiDate == key.Date) {
+                key.list.push(date);
+              }
+            }
+          }
         } else {
           nextDay.setDate(nextDay.getDate() + 1);
-          // console.log(nextDay);
+          console.log(nextDay);
           nextString = nextDay.toISOString().split('T')[0];
+          weekTemps.push({ Date: apiDate, list: [] });
+
+          if (weekTemps !== []) {
+            for (const key of weekTemps) {
+              if (apiDate == key.Date) {
+                key.list.push(date);
+              }
+            }
+          }
         }
       });
+      console.log(weekTemps);
+      console.log(objWeek);
 
-      // console.log(weekTemps);
+      w.list.forEach((time) => {
+        let apiDate = time.dt_txt.slice('', -9);
+
+        if ((apiDate = week)) {
+        }
+      });
 
       let cleanData = w.list.map((item) => ({
         date: item.dt_txt.slice('', -9),
