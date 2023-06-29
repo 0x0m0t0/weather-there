@@ -3,7 +3,7 @@ import { aKey } from './key.js';
 const main = document.querySelector('main');
 const wet = document.getElementById('wet');
 const search = document.getElementById('search');
-console.log(search);
+// console.log(search);
 
 const searchBtn = search.lastElementChild;
 const searchInput = search.children[1];
@@ -50,8 +50,8 @@ const searchFunction = (lat, lon) => {
   )
     .then((res) => res.json())
     .then((o) => {
-      console.log(o);
-      console.log(o[0].lat);
+      // console.log(o);
+      // console.log(o[0].lat);
       lat = o[0].lat;
       lon = o[0].lon;
       console.log(lat);
@@ -106,6 +106,7 @@ const creationEl = (newDay, el, date_time, lastItem) => {
 };
 let daysOf = 0;
 let current;
+
 const openW = (lat, lon) => {
   const fetching = fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${aKey}&units=metric`,
@@ -116,16 +117,13 @@ const openW = (lat, lon) => {
       console.log(w.list);
       cityh2.textContent = w.city.name;
 
-      //   wet.innerHTML = `
-      //   <div>
-      // <div class="week"><h2></h2></div>
-      // <div class="container">
-      // <div class="morning"> <h2>morning</h2></div>
-      // <div class="noon"><h2>noon</h2> </div>
-      // <div class="evening"> <h2>evening</h2></div>
-      // <div class="night"> <h2>night</h2></div>
+      let weekTemps = [];
 
-      // </div></div>`;
+      w.list.forEach((date) => {
+        let wdate = date.dt_txt.slice('', -9);
+      });
+
+      console.log(weekTemps);
 
       let cleanData = w.list.map((item) => ({
         date: item.dt_txt.slice('', -9),
@@ -158,93 +156,52 @@ const openW = (lat, lon) => {
       // cleanData.forEach((el) => {
       //   cleanData[el].push(w.city.name);
       // });
-      console.log(cleanData[1]);
-      console.log(cleanData);
+      // console.log(cleanData[1]);
+      // console.log(cleanData);
 
       // let week = document.getElementsByClassName('week')[0];
-      let currentDate = new Date().toJSON().slice(0, 10);
+
       // let cDate = new Date();
 
-      // for (let a = 1; a < 6; a++) {
-      //   let nextDay = new Date(cDate);
-      //   nextDay.setDate(cDate.getDate() + a);
-      //   console.log(nextDay.toDateString().slice(0, 10));
+      // let nextDay = new Date(cDate);
+      // console.log(nextDay);
+      // nextDay.setDate(cDate.getDate() + 1);
+      // console.log('yahahalalalala');
+      // console.log(nextDay);
+      // nextDay = nextDay.toISOString().split('T')[0];
+      // console.log(nextDay);
+      // console.log('uhu');
 
-      //   let weekday = document.createElement('h3');
-      //   weekday.textContent = nextDay.toDateString().slice(0, 10);
-
-      //   week.append(weekday);
-      // }
       cleanData.forEach((el, idx) => {
-        console.log(el.date);
         // let cDate = new Date();
         // for (let a = 1; a < 6; a++) {
         //   let nextDay = new Date(cDate);
         //   nextDay.setDate(cDate.getDate() + a);
         //   console.log(nextDay.toDateString().slice(0, 10));
-
         //   let weekday = document.createElement('h3');
         //   weekday.textContent = nextDay.toDateString().slice(0, 10);
-
         //   // week.append(weekday);
         // }
-
-        if (el.date !== currentDate && el.date !== current) {
-          daysOf++;
-          current = el.date;
-
-          // switch (date_time[1]) {
-          //   case '06:00:00':
-          //     if (
-          //       idx == w.list.length - 1 ||
-          //       (idx === w.list.length - 1 && date_time[1] == '06:00:00')
-          //     ) {
-          //       // console.log('hurray');
-          //       creationEl(morning, el, date_time, 0);
-          //       break;
-          //     } else {
-          //       creationEl(morning, el, date_time);
-          //       break;
-          //     }
-          //   case '12:00:00':
-          //     if (
-          //       idx == w.list.length - 1 ||
-          //       (idx === w.list.length - 2 && date_time[1] == '12:00:00')
-          //     ) {
-          //       creationEl(noon, el, date_time, 0);
-          //       break;
-          //     } else {
-          //       creationEl(noon, el, date_time);
-          //       break;
-          //     }
-          //   case '18:00:00':
-          //     if (idx == w.list.length - 1) {
-          //       creationEl(evening, el, date_time, 0);
-          //       break;
-          //     } else {
-          //       creationEl(evening, el, date_time);
-          //       break;
-          //     }
-          //   case '21:00:00':
-          //     if (idx == w.list.length - 1) {
-          //       console.log('hurray');
-          //       creationEl(night, el, date_time, 0);
-          //       break;
-          //     }
-          //     {
-          //       creationEl(night, el, date_time);
-          //       break;
-          //     }
-          //   default:
-          //     break;
-          // }
-        } else {
-          if (el.date == currentDate) {
-            console.log('today of all days');
-          }
-        }
+        // console.log(el.date);
+        // console.log(nextDay);
+        dateChecker(el, nextDay, cDate);
       });
     })
     .catch((err) => console.log('err', err));
 };
 // openW();
+
+// const dateChecker = (el, nextDay, cDate) => {
+//   if (el.date == nextDay) {
+//     let weekday = document.createElement('div');
+//     weekday.innerText = el.temp;
+//     main.append(weekday);
+//   } else if (el.date !== nextDay) {
+//     let nextDay = new Date(cDate);
+
+//     nextDay.setDate(cDate.getDate() + 1);
+//     nextDay = nextDay.toISOString().split('T')[0];
+//     console.log('bla');
+//     // dateChecker(el, nextDay, cDate);
+//   }
+// };
