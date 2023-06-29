@@ -116,6 +116,8 @@ const openW = (lat, lon) => {
     .then((res) => res.json())
     .then((w) => {
       console.log(w);
+      console.log('hey');
+      console.log(w.list);
 
       cityh2.textContent = w.city.name;
       // +
@@ -135,6 +137,44 @@ const openW = (lat, lon) => {
     <div class="night"> <h2>night</h2></div>
     
     </div></div>`;
+
+      w.list.forEach((elGet) => {
+        // console.log(elGet.dt_txt);
+      });
+
+      let cleanData = w.list.map((item) => ({
+        date: item.dt_txt.slice('', -9),
+        time: item.dt_txt.slice(-8),
+        clouds: item.clouds,
+        temp: item.main.temp,
+        humidity: item.main.humidity,
+        country: w.city.country,
+        id: w.city.id,
+        wind: item.wind,
+        temp_min: item.main.temp_max,
+        temp_max: item.main.temp_min,
+      }));
+
+      // const lool = Object.entries(w.city).map((it) => ({
+      //   id: w.city.id,
+      //   country: w.country,
+      //   name: w.name,
+      // }));
+
+      // const newTest = cleanData.map((ob, ind) => ({
+      //   ...ob,
+      //   ...w.city,
+      // }));
+
+      // console.log(w.city);
+      // console.log(lool);
+      // console.log('fuckisthis');
+      // console.log(newTest);
+      // cleanData.forEach((el) => {
+      //   cleanData[el].push(w.city.name);
+      // });
+      console.log(cleanData[1]);
+      console.log(cleanData);
 
       let week = document.getElementsByClassName('week')[0];
       let currentDate = new Date().toJSON().slice(0, 10);
@@ -164,29 +204,32 @@ const openW = (lat, lon) => {
         if (date_time[0] !== currentDate) {
           switch (date_time[1]) {
             case '06:00:00':
-              if (idx == w.list.length - 1) {
+              if (
+                idx == w.list.length - 1 ||
+                (idx === w.list.length - 1 && date_time[1] == '06:00:00')
+              ) {
                 // console.log('hurray');
-                creationEl(morning, el, date_time, last);
+                creationEl(morning, el, date_time, 0);
+                break;
+              } else {
+                creationEl(morning, el, date_time);
+                break;
               }
-              creationEl(morning, el, date_time);
-              break;
+
             case '12:00:00':
               if (
                 idx == w.list.length - 1 ||
                 (idx === w.list.length - 2 && date_time[1] == '12:00:00')
               ) {
-                //   console.log('hurray');
-
                 creationEl(noon, el, date_time, 0);
+                break;
               } else {
                 creationEl(noon, el, date_time);
+                break;
               }
 
-              break;
             case '18:00:00':
               if (idx == w.list.length - 1) {
-                //   console.log('hurray');
-
                 creationEl(evening, el, date_time, 0);
                 break;
               } else {
@@ -196,9 +239,13 @@ const openW = (lat, lon) => {
             case '21:00:00':
               if (idx == w.list.length - 1) {
                 console.log('hurray');
+                creationEl(night, el, date_time, 0);
+                break;
               }
-              creationEl(night, el, date_time);
-              break;
+              {
+                creationEl(night, el, date_time);
+                break;
+              }
             default:
               break;
           }
