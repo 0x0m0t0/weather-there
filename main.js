@@ -62,19 +62,22 @@ const searchFunction = (lat, lon) => {
 };
 
 const creationEl = (newDay, el, date_time, lastItem) => {
-  let day = document.createElement('div');
+  // container blocks
   let moment = document.createElement('div');
 
+  // content blocks
   let temp = document.createElement('p');
-  let date = document.createElement('p');
   let time = document.createElement('p');
 
+  // Set classes for css targeting
+  day.setAttribute('class', 'day');
   moment.setAttribute('class', 'moment');
 
-  // moment.append(date);
+  // Append
   moment.append(time);
   moment.append(temp);
 
+  // content blocks
   let pClouds = document.createElement('div');
   let pHumidity = document.createElement('div');
 
@@ -82,8 +85,8 @@ const creationEl = (newDay, el, date_time, lastItem) => {
   moment.append(pHumidity);
 
   day.append(moment);
-  pHumidity.innerText = `Humidity ${el.main.humidity}%`;
-  pClouds.innerText = `Clouds ${el.clouds.all}%`;
+  pHumidity.innerText = `Humidity ${el.list.humidity}%`;
+  pClouds.innerText = `Clouds ${el.list.all}%`;
 
   // //// fix humidity levels with icons
   // if (el.clouds.all > 75) {
@@ -136,7 +139,6 @@ const openW = (lat, lon) => {
           }
         } else {
           nextDay.setDate(nextDay.getDate() + 1);
-          console.log(nextDay);
           nextString = nextDay.toISOString().split('T')[0];
           weekTemps.push({ Date: apiDate, list: [] });
 
@@ -150,40 +152,55 @@ const openW = (lat, lon) => {
         }
       });
       console.log(weekTemps);
-      console.log(objWeek);
+      console.log(weekTemps.list);
 
-      w.list.forEach((time) => {
-        let apiDate = time.dt_txt.slice('', -9);
+      weekTemps.forEach((el) => {
+        let dayTitle = document.createElement('h3');
+        dayTitle.innerText = el.Date;
+        let day = document.createElement('div');
+        day.setAttribute('class', 'day');
+        day.append(dayTitle);
+        wet.append(day);
 
-        if ((apiDate = week)) {
-        }
+        el.list.forEach((el) => {
+          // container blocks
+          let moment = document.createElement('div');
+
+          // content blocks
+          let temp = document.createElement('p');
+          let time = document.createElement('p');
+          temp.innerText = el.main.temp;
+          // Set classes for css targeting
+
+          moment.setAttribute('class', 'moment');
+
+          // Append
+          moment.append(time);
+          moment.append(temp);
+
+          // content blocks
+          let pClouds = document.createElement('div');
+          let pHumidity = document.createElement('div');
+
+          moment.append(pClouds);
+          moment.append(pHumidity);
+
+          day.append(moment);
+        });
       });
 
-      let cleanData = w.list.map((item) => ({
-        date: item.dt_txt.slice('', -9),
-        time: item.dt_txt.slice(-8),
-        clouds: item.clouds,
-        temp: item.main.temp,
-        humidity: item.main.humidity,
-        country: w.city.country,
-        id: w.city.id,
-        wind: item.wind,
-        temp_min: item.main.temp_max,
-        temp_max: item.main.temp_min,
-      }));
-
-      // const lool = Object.entries(w.city).map((it) => ({
+      // let cleanData = w.list.map((item) => ({
+      //   date: item.dt_txt.slice('', -9),
+      //   time: item.dt_txt.slice(-8),
+      //   clouds: item.clouds,
+      //   temp: item.main.temp,
+      //   humidity: item.main.humidity,
+      //   country: w.city.country,
       //   id: w.city.id,
-      //   country: w.country,
-      //   name: w.name,
+      //   wind: item.wind,
+      //   temp_min: item.main.temp_max,
+      //   temp_max: item.main.temp_min,
       // }));
-
-      // const newTest = cleanData.map((ob, ind) => ({
-      //   ...ob,
-      //   ...w.city,
-      // }));
-
-      // let week = document.getElementsByClassName('week')[0];
     })
     .catch((err) => console.log('err', err));
 };
