@@ -26,11 +26,15 @@ main {
 }
 #search,
 #today {
-  flex: 1 1 50;
+  flex: 1 1 50%;
   display: flex;
   justify-content: center;
   width: 50%;
-  margin: 1rem;
+  padding: 1em;
+}
+
+#today {
+  flex-flow: column wrap;
 }
 #search {
   input,
@@ -45,7 +49,26 @@ main {
 #wet {
   width: 100%;
   display: flex;
+  gap: 1em;
   > * {
     flex: 1 1 20%;
   }
+}
+.moment {
+  padding: 1rem;
+  border: 1px dotted rgb(16, 161, 153, 0.2);
+  border-radius: 10px;
+}
+
+svg {
+  height: 2rem;
+  max-width: 2em;
+}
+.chart {
+  width: 96vw;
+
+  height: 10em;
+  // canvas {
+  //   min-height: auto;
+  // }
 }

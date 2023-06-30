@@ -7,9 +7,7 @@
 
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
-    <!-- <script type="module">
-      import aKey from './key.js';
-    </script> -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
     <script type="module" defer src="main.js"></script>
   </head>
   <body>
@@ -19,6 +17,9 @@
         <input placeholder="City name, Country code" type="text" />
         <button>SEARCH</button>
       </section>
+      <div class="chart">
+        <canvas id="myChart"></canvas>
+      </div>
       <section id="wet"></section>
     </main>
   </body>
