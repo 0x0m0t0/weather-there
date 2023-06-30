@@ -163,6 +163,68 @@ const openW = (lat, lon) => {
         wet.append(day);
 
         el.list.forEach((el) => {
+          ///////
+          const date_time = el.dt_txt.split(' ', 2);
+          // console.log(date_time);
+
+          const morning = document.getElementsByClassName('morning')[0];
+          const noon = document.getElementsByClassName('noon')[0];
+          const evening = document.getElementsByClassName('evening')[0];
+          const night = document.getElementsByClassName('night')[0];
+          /// show date of today separate
+          /// if datenow is not equal to today
+
+          if (date_time[0] !== currentDate) {
+            switch (date_time[1]) {
+              case '06:00:00':
+                if (idx == w.list.length - 1) {
+                  // console.log('hurray');
+                  creationEl(morning, el, date_time, last);
+                }
+                creationEl(morning, el, date_time);
+                break;
+              case '12:00:00':
+                if (
+                  idx == w.list.length - 1 ||
+                  (idx === w.list.length - 2 && date_time[1] == '12:00:00')
+                ) {
+                  //   console.log('hurray');
+
+                  creationEl(noon, el, date_time, 0);
+                } else {
+                  creationEl(noon, el, date_time);
+                }
+
+                break;
+              case '18:00:00':
+                if (idx == w.list.length - 1) {
+                  //   console.log('hurray');
+
+                  creationEl(evening, el, date_time, 0);
+                  break;
+                } else {
+                  creationEl(evening, el, date_time);
+                  break;
+                }
+              case '21:00:00':
+                if (idx == w.list.length - 1) {
+                  console.log('hurray');
+                }
+                creationEl(night, el, date_time);
+                break;
+              default:
+                break;
+            }
+          } else {
+            if (el == w.list[0]) {
+              pHumidity.innerText = `Humidity ${w.list[0].main.humidity}%`;
+              pClouds.innerText = `Clouds ${w.list[0].clouds.all}%`;
+              pToday.innerText = w.list[0].main.temp;
+              pToday.innerText = pToday.innerText.concat(' ', '°C');
+            }
+          }
+          console.log(w.list.length);
+
           // container blocks
           let moment = document.createElement('div');
 
