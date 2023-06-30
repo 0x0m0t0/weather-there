@@ -1,5 +1,6 @@
 import { aKey } from './key.js';
-
+let weekdays = [];
+let temper = [];
 const main = document.querySelector('main');
 const wet = document.getElementById('wet');
 const search = document.getElementById('search');
@@ -125,7 +126,7 @@ const openW = (lat, lon) => {
       let today = new Date();
       let nextDay = new Date(today);
       let nextString = nextDay.toISOString().split('T')[0];
-      let objWeek;
+
       w.list.forEach((date) => {
         let apiDate = date.dt_txt.slice('', -9);
 
@@ -171,6 +172,8 @@ const openW = (lat, lon) => {
           const hours = ['06:00:00', '12:00:00', '18:00:00', '21:00:00'];
 
           if (hours.includes(hour)) {
+            temper.push(el.main.temp);
+            console.log(temper);
             // container blocks
             let moment = document.createElement('div');
 
@@ -227,6 +230,60 @@ const openW = (lat, lon) => {
       //   temp_min: item.main.temp_max,
       //   temp_max: item.main.temp_min,
       // }));
+
+      weekdays = weekTemps;
+    })
+    .then((week) => {
+      ///// chartjs
+
+      const ctx = document.querySelector('#myChart').getContext('2d');
+
+      console.log(ctx);
+      let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, 'rgba(58,123,231,1');
+      gradient.addColorStop(1, 'rgba(58,123,231,0.1');
+
+      const labels = weekdays;
+      console.log('yee');
+      console.log(weekdays);
+      // const labels = [
+      //   2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021,
+      //   2022, 2023,
+      // ];
+      const data = {
+        labels,
+        datasets: [
+          {
+            data: [201, 121, 2012, 23, 345],
+            label: 'test stuff',
+            fill: true,
+            backgroundColor: gradient,
+            tension: 0.6,
+          },
+        ],
+      };
+
+      const config = {
+        type: 'line',
+        data: data,
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              ticks: {
+                callback: function (value) {
+                  return value + ' °C';
+                },
+              },
+            },
+          },
+        },
+        plugins: [],
+      };
+
+      const myChart = new Chart(ctx, config);
+
+      ////
     })
     .catch((err) => console.log('err', err));
 };

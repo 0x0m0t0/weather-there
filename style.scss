@@ -60,3 +60,13 @@ svg {
   height: 2rem;
   max-width: 2em;
 }
+.chart {
+  width: 100%;
+  height: auto;
+  canvas {
+    width: 100%;
+    height: auto;
+
+    min-height: auto;
+  }
+}
