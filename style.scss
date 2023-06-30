@@ -61,12 +61,10 @@ svg {
   max-width: 2em;
 }
 .chart {
-  width: 100%;
-  height: auto;
-  canvas {
-    width: 100%;
-    height: auto;
+  width: 100vw;
 
-    min-height: auto;
-  }
+  height: 10em;
+  // canvas {
+  //   min-height: auto;
+  // }
 }

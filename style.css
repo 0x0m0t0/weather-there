@@ -49,11 +49,7 @@ svg {
   max-width: 2em; }
 
 .chart {
-  width: 100%;
-  height: auto; }
-  .chart canvas {
-    width: 100%;
-    height: auto;
-    min-height: auto; }
+  width: 100vw;
+  height: 10em; }
 
 /*# sourceMappingURL=style.css.map */
