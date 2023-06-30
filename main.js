@@ -165,89 +165,86 @@ const openW = (lat, lon) => {
         el.list.forEach((el) => {
           ///////
           const date_time = el.dt_txt.split(' ', 2);
-          // console.log(date_time);
+          let date = date_time[0];
+          let hour = date_time[1];
 
-          const morning = document.getElementsByClassName('morning')[0];
-          const noon = document.getElementsByClassName('noon')[0];
-          const evening = document.getElementsByClassName('evening')[0];
-          const night = document.getElementsByClassName('night')[0];
-          /// show date of today separate
-          /// if datenow is not equal to today
+          const hours = ['06:00:00', '12:00:00', '18:00:00', '21:00:00'];
 
-          if (date_time[0] !== currentDate) {
-            switch (date_time[1]) {
-              case '06:00:00':
-                if (idx == w.list.length - 1) {
-                  // console.log('hurray');
-                  creationEl(morning, el, date_time, last);
-                }
-                creationEl(morning, el, date_time);
-                break;
-              case '12:00:00':
-                if (
-                  idx == w.list.length - 1 ||
-                  (idx === w.list.length - 2 && date_time[1] == '12:00:00')
-                ) {
-                  //   console.log('hurray');
+          if (hours.includes(hour)) {
+            console.log('heeeyaa');
+            console.log(hour);
 
-                  creationEl(noon, el, date_time, 0);
-                } else {
-                  creationEl(noon, el, date_time);
-                }
+            // container blocks
+            let moment = document.createElement('div');
 
-                break;
-              case '18:00:00':
-                if (idx == w.list.length - 1) {
-                  //   console.log('hurray');
+            // content blocks
+            let temp = document.createElement('p');
+            let time = document.createElement('p');
+            temp.innerText = el.main.temp;
+            // Set classes for css targeting
 
-                  creationEl(evening, el, date_time, 0);
-                  break;
-                } else {
-                  creationEl(evening, el, date_time);
-                  break;
-                }
-              case '21:00:00':
-                if (idx == w.list.length - 1) {
-                  console.log('hurray');
-                }
-                creationEl(night, el, date_time);
-                break;
-              default:
-                break;
-            }
+            moment.setAttribute('class', 'moment');
+
+            // Append
+            moment.append(time);
+            moment.append(temp);
+
+            // content blocks
+            let pClouds = document.createElement('div');
+            let pHumidity = document.createElement('div');
+
+            moment.append(pClouds);
+            moment.append(pHumidity);
+
+            day.append(moment);
+
+            // switch (date_time[1]) {
+            //   case '06:00:00':
+            //     if (idx == w.list.length - 1) {
+            //       // console.log('hurray');
+            //       creationEl(morning, el, date_time, last);
+            //     }
+            //     creationEl(morning, el, date_time);
+            //     break;
+            //   case '12:00:00':
+            //     if (
+            //       idx == w.list.length - 1 ||
+            //       (idx === w.list.length - 2 && date_time[1] == '12:00:00')
+            //     ) {
+            //       //   console.log('hurray');
+            //       creationEl(noon, el, date_time, 0);
+            //     } else {
+            //       creationEl(noon, el, date_time);
+            //     }
+            //     break;
+            //   case '18:00:00':
+            //     if (idx == w.list.length - 1) {
+            //       //   console.log('hurray');
+            //       creationEl(evening, el, date_time, 0);
+            //       break;
+            //     } else {
+            //       creationEl(evening, el, date_time);
+            //       break;
+            //     }
+            //   case '21:00:00':
+            //     if (idx == w.list.length - 1) {
+            //       console.log('hurray');
+            //     }
+            //     creationEl(night, el, date_time);
+            //     break;
+            //   default:
+            //     break;
+            // }
           } else {
-            if (el == w.list[0]) {
-              pHumidity.innerText = `Humidity ${w.list[0].main.humidity}%`;
-              pClouds.innerText = `Clouds ${w.list[0].clouds.all}%`;
-              pToday.innerText = w.list[0].main.temp;
-              pToday.innerText = pToday.innerText.concat(' ', '°C');
-            }
           }
-          console.log(w.list.length);
-
-          // container blocks
-          let moment = document.createElement('div');
-
-          // content blocks
-          let temp = document.createElement('p');
-          let time = document.createElement('p');
-          temp.innerText = el.main.temp;
-          // Set classes for css targeting
-
-          moment.setAttribute('class', 'moment');
-
-          // Append
-          moment.append(time);
-          moment.append(temp);
-
-          // content blocks
-          let pClouds = document.createElement('div');
-          let pHumidity = document.createElement('div');
-
-          moment.append(pClouds);
-          moment.append(pHumidity);
-
-          day.append(moment);
+          // else {
+          //   if (el == w.list[0]) {
+          //     pHumidity.innerText = `Humidity ${w.list[0].main.humidity}%`;
+          //     pClouds.innerText = `Clouds ${w.list[0].clouds.all}%`;
+          //     pToday.innerText = w.list[0].main.temp;
+          //     pToday.innerText = pToday.innerText.concat(' ', '°C');
+          //   }
+          // }
         });
       });
 
