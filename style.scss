@@ -56,13 +56,13 @@ main {
 }
 .moment {
   padding: 1rem;
-  border: 1px dotted rgb(16, 161, 153, 0.2);
+  border: 1px dotted rgba(16, 161, 153, 0.2);
   border-radius: 10px;
 }
 
 svg {
   height: 2rem;
-  max-width: 2em;
+  max-width: 2rem;
 }
 .chart {
   width: 96vw;
