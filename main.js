@@ -33,7 +33,7 @@ searchInput.addEventListener('keypress', (e) => {
     cityname = city_country[0];
     countrycode = city_country[1];
     wet.innerHTML = '';
-    searchFunction(openW(lat, lon));
+    searchFunction(lat, lon);
   }
 });
 
@@ -43,13 +43,13 @@ searchBtn.addEventListener('click', (e) => {
   cityname = city_country[0];
   countrycode = city_country[1];
   wet.innerHTML = '';
-  searchFunction(openW(lat, lon));
+  searchFunction(lat, lon);
 });
 
 let lat;
 let lon;
 const searchFunction = (lat, lon) => {
-  const geoloc = fetch(
+  fetch(
     `http://api.openweathermap.org/geo/1.0/direct?q=${cityname},${countrycode}&limit=1&appid=${aKey}`,
   )
     .then((res) => res.json())
@@ -69,7 +69,7 @@ let daysOf = 0;
 let current;
 
 const openW = (lat, lon) => {
-  const fetching = fetch(
+  fetch(
     `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${aKey}&units=metric`,
   )
     .then((res) => res.json())
